@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { Card, Dimmer, Button, Header, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import JoinSessionModule from "./JoinSessionModule";
 
 const SessionCard = ({ session: { id, date, attendees } }) => {
   const [active, setActive] = useState();
+  const [open, setOpen] = useState(false);
 
   const handleShow = () => setActive(true);
 
   const handleHide = () => setActive(false);
+
+  const show = () => setOpen(true);
+  const close = () => setOpen(false);
 
   const content = (
     <div>
@@ -15,7 +20,9 @@ const SessionCard = ({ session: { id, date, attendees } }) => {
         Join Session?
       </Header>
 
-      <Button color="green">Join</Button>
+      <Button onClick={show} color="green">
+        Join
+      </Button>
     </div>
   );
 
@@ -33,14 +40,17 @@ const SessionCard = ({ session: { id, date, attendees } }) => {
   );
 
   return (
-    <Dimmer.Dimmable
-      dimmed={active}
-      onMouseEnter={handleShow}
-      onMouseLeave={handleHide}
-    >
-      {cardContent}
-      <Dimmer active={active}>{content}</Dimmer>
-    </Dimmer.Dimmable>
+    <>
+      <Dimmer.Dimmable
+        dimmed={active}
+        onMouseEnter={handleShow}
+        onMouseLeave={handleHide}
+      >
+        {cardContent}
+        <Dimmer active={active}>{content}</Dimmer>
+      </Dimmer.Dimmable>
+      <JoinSessionModule open={open} close={close} />
+    </>
   );
 };
 
