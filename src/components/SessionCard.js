@@ -1,15 +1,46 @@
-import React from "react";
-import { Card, Icon, Label, Feed } from "semantic-ui-react";
-import moment from "moment";
+import React, { useState } from "react";
+import { Card, Dimmer, Button, Header, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
-const SessionCard = ({ session: { date, attendees } }) => {
-  return (
-    <Card>
+const SessionCard = ({ session: { id, date, attendees } }) => {
+  const [active, setActive] = useState();
+
+  const handleShow = () => setActive(true);
+
+  const handleHide = () => setActive(false);
+
+  const content = (
+    <div>
+      <Header as="h2" inverted>
+        Join Session?
+      </Header>
+
+      <Button color="green">Join</Button>
+    </div>
+  );
+
+  const cardContent = (
+    <Card fluid>
       <Card.Content>
-        <Card.Header>{moment(date).format("dddd LL")}</Card.Header>
+        <Card.Header>{date}</Card.Header>
       </Card.Content>
-      <Card.Content>{attendees}</Card.Content>
+      <Card.Content>
+        {attendees.map(a => (
+          <div>{a}</div>
+        ))}
+      </Card.Content>
     </Card>
+  );
+
+  return (
+    <Dimmer.Dimmable
+      dimmed={active}
+      onMouseEnter={handleShow}
+      onMouseLeave={handleHide}
+    >
+      {cardContent}
+      <Dimmer active={active}>{content}</Dimmer>
+    </Dimmer.Dimmable>
   );
 };
 

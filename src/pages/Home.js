@@ -23,7 +23,7 @@ const Home = () => {
         ) : (
           data &&
           data.getSessions.map(session => (
-            <Grid.Column key={session.id}>
+            <Grid.Column key={session.id} style={{ marginBottom: 20 }}>
               <SessionCard session={session} />
             </Grid.Column>
           ))
