@@ -7,3 +7,8 @@
   display: flex;
   justify-content: center !important;
 }
+
+.form-container {
+  width: 400px;
+  margin: auto;
+}
