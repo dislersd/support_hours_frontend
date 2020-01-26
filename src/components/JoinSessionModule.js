@@ -13,15 +13,15 @@ class JoinSessionModule extends Component {
             <p>Are you sure you want to join this session?</p>
           </Modal.Content>
           <Modal.Actions>
-            <Button onClick={close} negative>
-              No
-            </Button>
             <Button
               positive
               icon="checkmark"
               labelPosition="right"
               content="Yes"
             />
+            <Button onClick={close} negative>
+              No
+            </Button>
           </Modal.Actions>
         </Modal>
       </div>

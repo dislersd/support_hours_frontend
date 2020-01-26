@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
     <Grid columns={3}>
-      <Grid.Row>
+      <Grid.Row className="page-title">
         <h2>Support Hour Sessions</h2>
       </Grid.Row>
       <Grid.Row>

@@ -2,3 +2,8 @@
   background-color: rgba(65, 70, 97, 0.8);
   border-radius: 3px;
 }
+
+.page-title {
+  display: flex;
+  justify-content: center !important;
+}
