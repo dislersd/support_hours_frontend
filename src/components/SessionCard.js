@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Card, Dimmer, Button, Header, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Card, Dimmer, Button, Header } from "semantic-ui-react";
 import JoinSessionModule from "./JoinSessionModule";
 
 const SessionCard = ({ session: { id, date, attendees } }) => {
