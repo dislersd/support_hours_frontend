@@ -48,7 +48,7 @@ const SessionCard = ({ session: { id, date, attendees } }) => {
         {cardContent}
         <Dimmer active={active}>{content}</Dimmer>
       </Dimmer.Dimmable>
-      <JoinSessionModule open={open} close={close} />
+      <JoinSessionModule open={open} close={close} id={id} />
     </>
   );
 };

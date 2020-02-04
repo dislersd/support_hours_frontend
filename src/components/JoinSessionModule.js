@@ -3,7 +3,11 @@ import { Button, Modal } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 
-function JoinSessionModal({ open, close }) {
+function JoinSessionModal({ open, close, id }) {
+  const [joinSession] = useMutation(JOIN_SESSION, {
+    variables: { sessionId: id }
+  });
+
   return (
     <div>
       <Modal open={open} onClose={close}>
@@ -17,6 +21,7 @@ function JoinSessionModal({ open, close }) {
             icon="checkmark"
             labelPosition="right"
             content="Yes"
+            onClick={joinSession}
           />
           <Button onClick={close} negative>
             No
@@ -28,7 +33,7 @@ function JoinSessionModal({ open, close }) {
 }
 
 const JOIN_SESSION = gql`
-  mutation joinSession($sessionId: String!) {
+  mutation joinSession($sessionId: ID!) {
     joinSession(sessionId: $sessionId)
   }
 `;
