@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import { Grid, Button } from "semantic-ui-react";
 
 import { AuthContext } from "../context/auth";
 import SessionCard from "../components/SessionCard";
 import { Link } from "react-router-dom";
+import { FETCH_SESSIONS_QUERY } from "../util/graphQL";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
@@ -51,15 +51,5 @@ const Home = () => {
 
   return home;
 };
-
-const FETCH_SESSIONS_QUERY = gql`
-  {
-    getSessions {
-      id
-      date
-      attendees
-    }
-  }
-`;
 
 export default Home;

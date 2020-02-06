@@ -32,7 +32,7 @@ const SessionCard = ({ session: { id, date, attendees } }) => {
       </Card.Content>
       <Card.Content>
         {attendees.map(a => (
-          <div>{a}</div>
+          <div key={a}>{a}</div>
         ))}
       </Card.Content>
     </Card>
