@@ -1,26 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Card, Dimmer, Button, Header } from "semantic-ui-react";
-import JoinSessionModule from "./JoinSessionModule";
+import JoinSessionModal from "./JoinSessionModal";
+import LeaveSessionModal from "./LeaveSessionModal";
+import { AuthContext } from "../context/auth";
 
 const SessionCard = ({ session: { id, date, attendees } }) => {
+  const { user } = useContext(AuthContext);
+
   const [active, setActive] = useState();
-  const [open, setOpen] = useState(false);
+
+  const [joinOpen, setJoinOpen] = useState(false);
+  const [leaveOpen, setLeaveOpen] = useState(false);
 
   const handleShow = () => setActive(true);
-
   const handleHide = () => setActive(false);
 
-  const show = () => setOpen(true);
-  const close = () => setOpen(false);
+  const joinShow = () => setJoinOpen(true);
+  const joinClose = () => setJoinOpen(false);
 
-  const content = (
+  const leaveShow = () => setLeaveOpen(true);
+  const leaveClose = () => setLeaveOpen(false);
+
+  const userNotPresentContent = (
     <div>
       <Header as="h2" inverted>
         Join Session?
       </Header>
 
-      <Button onClick={show} color="green">
+      <Button onClick={joinShow} color="green">
         Join
+      </Button>
+    </div>
+  );
+
+  const userPresentContent = (
+    <div>
+      <Header as="h2" inverted>
+        Leave Session?
+      </Header>
+
+      <Button onClick={leaveShow} color="red">
+        Leave
       </Button>
     </div>
   );
@@ -46,9 +66,14 @@ const SessionCard = ({ session: { id, date, attendees } }) => {
         onMouseLeave={handleHide}
       >
         {cardContent}
-        <Dimmer active={active}>{content}</Dimmer>
+        <Dimmer active={active}>
+          {attendees.includes(user.username)
+            ? userPresentContent
+            : userNotPresentContent}
+        </Dimmer>
       </Dimmer.Dimmable>
-      <JoinSessionModule open={open} close={close} id={id} />
+      <JoinSessionModal open={joinOpen} close={joinClose} id={id} />
+      <LeaveSessionModal open={leaveOpen} close={leaveClose} id={id} />
     </>
   );
 };
