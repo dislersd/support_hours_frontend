@@ -11,7 +11,9 @@ import MenuBar from "./components/MenuBar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Admin from "./pages/Admin";
 import AuthRoute from "./util/AuthRoute";
+import AdminRoute from "./util/AdminRoute";
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         <Container>
           <MenuBar />
           <Route exact path="/" component={Home} />
+          {/* <AdminRoute exact path="/admin" component={Admin} /> */}
           <AuthRoute exact path="/login" component={Login} />
           <AuthRoute exact path="/register" component={Register} />
         </Container>

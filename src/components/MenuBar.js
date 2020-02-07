@@ -1,9 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth";
 
 function MenuBar() {
+  const [userr, setUser] = useState(null);
+
+  useEffect(() => {
+    console.log("user updated");
+    if (user) {
+      console.log(user);
+    }
+  }, [userr]);
+
   const { user, logout } = useContext(AuthContext);
   const pathname = window.location.pathname;
   const path = pathname === "/" ? "home" : pathname.substr(1);
