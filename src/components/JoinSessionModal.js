@@ -1,10 +1,15 @@
-import React from "react";
-import { Button, Modal } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Button, Modal, TextArea, Form } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { FETCH_SESSIONS_QUERY } from "../util/graphQL";
 
 function JoinSessionModal({ open, close, id }) {
+  const [blockerOpen, setBlockerOpen] = useState(false);
+
+  const openBlocker = () => setBlockerOpen(true);
+  const closeBlocker = () => setBlockerOpen(false);
+
   const [joinSession] = useMutation(JOIN_SESSION, {
     variables: { sessionId: id },
     update(proxy) {
@@ -33,11 +38,26 @@ function JoinSessionModal({ open, close, id }) {
             icon="checkmark"
             labelPosition="right"
             content="Yes"
-            onClick={joinSessionSubmit}
+            onClick={openBlocker}
           />
           <Button onClick={close} negative>
             No
           </Button>
+        </Modal.Actions>
+      </Modal>
+
+      <Modal open={blockerOpen} onClose={closeBlocker}>
+        <Modal.Header>Blockers</Modal.Header>
+        <Modal.Content>
+          <Form>
+            <TextArea placeholder="What do you need help with?..." />
+          </Form>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button positive onClick={joinSessionSubmit}>
+            Submit
+          </Button>
+          <Button negative>Cancel</Button>
         </Modal.Actions>
       </Modal>
     </div>
