@@ -6,6 +6,7 @@ import { FETCH_SESSIONS_QUERY } from "../util/graphQL";
 
 function JoinSessionModal({ open, close, id }) {
   const [blockerOpen, setBlockerOpen] = useState(false);
+  const [blocker, setBlocker] = useState("");
 
   const openBlocker = () => setBlockerOpen(true);
   const closeBlocker = () => setBlockerOpen(false);
@@ -20,9 +21,21 @@ function JoinSessionModal({ open, close, id }) {
     }
   });
 
+  const [createBlocker] = useMutation(CREATE_BLOCKER, {
+    variables: {
+      sessionId: id,
+      body: blocker
+    }
+  });
+
   function joinSessionSubmit() {
+    createBlocker();
     joinSession();
     close();
+  }
+
+  function handleChange(e) {
+    setBlocker(e.target.value);
   }
 
   return (
@@ -50,7 +63,12 @@ function JoinSessionModal({ open, close, id }) {
         <Modal.Header>Blockers</Modal.Header>
         <Modal.Content>
           <Form>
-            <TextArea placeholder="What do you need help with?..." />
+            <TextArea
+              placeholder="What do you need help with?..."
+              name="blocker"
+              value={blocker}
+              onChange={handleChange}
+            />
           </Form>
         </Modal.Content>
         <Modal.Actions>
@@ -70,6 +88,18 @@ const JOIN_SESSION = gql`
       id
       date
       attendees
+    }
+  }
+`;
+
+const CREATE_BLOCKER = gql`
+  mutation createBlocker($sessionId: ID!, $body: String) {
+    createBlocker(sessionId: $sessionId, body: $body) {
+      username
+      blockers {
+        body
+        forSession
+      }
     }
   }
 `;
